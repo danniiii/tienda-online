@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/fragments/components :: head">
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+
+<div th:replace="admin/fragments/components :: nav"></div>
+
+    <div class="container-fluid my-4">
+        <div class="row">
+            <div th:replace="admin/fragments/components :: leftSidebar"> </div>
+
+            <div class="col-8 mx-2">
+                <h1>Categorias</h1>
+                <div class="float-right my-2">
+                    <a class="btn btn-lg btn-success text-white" data-toggle="collapse" data-target="#btnCrearCategoria" type="button" aria-expanded="false" aria-controls="btnCrearCategoria">Crear Categoria +</a>
+                </div>
+                <br>
+                <div class="collapse my-2" id="btnCrearCategoria">
+                    <div class="row">
+                        <input type="text" class="col-8 form-control" placeholder="Ingrese la categoria"  id="inputInsertarCategoria" required="true">
+                        <button class="col-3 ml-2 btn btn-primary text-white" id="btnInsertarCategoria" type="submit">Enviar</button>
+                    </div>
+                </div>
+
+                <table class="table table-hover table-responsive-md">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col" >Nombre</th>
+                        <th scope="col" >Accion</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="categoria, status : ${categorias}">
+                        <td><b class="text-wrap" th:text="${status.index+1}"></b></td>
+                        <td><b class="text-wrap" th:text="${categoria.nombreCategoria}"></b></td>
+                        <td>
+                            <div class="btn-group btn-group-md">
+                                <button class="btn btn-primary text-white" data-toggle="collapse" th:data-target="'#editarCategoria' + ${status.index+1}" type="button" aria-expanded="false" th:aria-controls="'editarCategoria' + ${status.index+1}">Editar</button>
+                                <button class="btn btn-danger text-white btnEliminaCategoria" >Eliminar</button>
+                                <input type="hidden" th:value="${categoria.idCategoria}" class="inputIdCategoria"/>
+                            </div>
+                            <br>
+                            <div class="collapse my-2" th:id="'editarCategoria' + ${status.index+1}">
+                                <div class="row my-2 my-lg-0">
+                                    <input type="hidden" th:value="${categoria.idCategoria}" class="inputIdCategoria"/>
+                                    <input type="text" class="col-8 form-control inputNombrecategoria"  placeholder="Ingrese la modificación" required="true"
+                                           name="inputNombrecategoria"/>
+                                    <button class="col-3 ml-2 btn btn-primary text-white btnEnviarEditarCategoria" type="submit" >Enviar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<div th:replace="admin/fragments/components :: script"></div>
+
+</body>
+</html>

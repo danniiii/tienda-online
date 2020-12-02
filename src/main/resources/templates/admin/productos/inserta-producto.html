@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/fragments/components :: head">
+</head>
+
+<body>
+
+<!-- Navigation -->
+
+<div th:replace="admin/fragments/components :: nav"></div>
+
+<div class="container-fluid my-4">
+    <div class="row">
+        <div th:replace="admin/fragments/components :: leftSidebar"> </div>
+
+        <div class="col-9">
+            <h1>Ingrese los datos del producto</h1>
+
+            <!-- FORMULARIO USUARIOS-->
+            <form method="post" th:action="@{'/admin/productos/crear'}" th:object="${productoDto}">
+
+                <div class="form-group">
+                    <label for="titulo">Titulo</label>
+                    <input type="text" class="form-control" id="titulo" th:field="*{tituloProducto}" maxlength="100"/>
+                    <small>Máximo 100 caracteres</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        <label for="codigo">Código</label>
+                        <input type="text" class="form-control" id="codigo" th:field="*{codigoProducto}"/>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="stock">Stock</label>
+                        <input type="number" class="form-control" id="stock" th:field="*{stock}"/>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="garantia">Garantía</label>
+                        <input type="text" class="form-control" id="garantia" th:field="*{garantia}"/>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        <label for="marca">Marca</label>
+                        <input type="text" class="form-control" id="marca" th:field="*{marca}"/>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="precio">Precio</label>
+                        <input type="number" class="form-control" id="precio" th:field="*{precio}"/>
+                    </div>
+                    <!--<div class="form-group col-4">
+                        <label for="categoria">Categoría</label>
+                        <select type="text" class="form-control" id="categoria" th:field="*{idCategoria}">
+                            <option selected value="">Seleccione una opción</option>
+                            <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nombreCategoria}"></option>
+                        </select>
+                    </div>-->
+                </div>
+                <div class="form-row" id="agrega-categoria-seccion">
+                    <input type="hidden" id="lista-categorias">
+                    <div class="form-group col-4">
+                        <select type="text" class="form-control" id="categoria" name="idCategoria" th:field="*{idCategoria}">
+                            <option selected value="">Seleccione una categoría</option>
+                            <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.nombreCategoria}"></option>
+                        </select>
+                    </div>
+                    <!--<div class="form-group mx-2">
+                        <button class="btn btn-lg btn-primary" id="agrega-categoria"> Agregar </button>
+                    </div>-->
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="form-control" id="descripcion" maxlength="500" th:field="*{descripcion}"></textarea>
+                    <small><i>Máximo 500 caracteres</i></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="caracteristicas" >Características técnicas</label>
+                    <textarea class="form-control" id="caracteristicas" maxlength="500" th:field="*{caracteristicas}"></textarea>
+                    <small><i>Máximo 500 caracteres</i></small>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" id="enviar">Enviar</button>
+            </form>
+            <!-- /FORMULARIO USUARIOS-->
+
+        </div>
+    </div>
+</div>
+
+    <div th:insert="admin/fragments/components :: script">  </div>
+
+<script th:inline="javascript" >
+
+        var listaCategorias = [[${listaCategorias}]]
+
+    </script>
+</body>
+</html>

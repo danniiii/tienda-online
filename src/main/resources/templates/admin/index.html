@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/fragments/components :: head">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+
+  <div th:replace="admin/fragments/components :: nav"></div>
+
+  <div class="container-fluid my-4">
+    <div class="row">
+      <div th:replace="admin/fragments/components :: leftSidebar"> </div>
+      <div class="col-4 mx-auto">
+        <div class="alert alert-info" role="alert">
+          Desde este panel se pueden realizar diferentes tareas como gestionar las categorías,
+          visualizar/modificar los datos de los usuarios y la gestión de productos que implica
+          subir productos, eliminar o modificar existentes.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

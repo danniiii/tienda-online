@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/fragments/components :: head">
+</head>
+
+<body>
+
+<!-- Navigation -->
+
+<div th:replace="admin/fragments/components :: nav"></div>
+
+<div class="container-fluid my-4">
+    <div class="row">
+        <div th:replace="admin/fragments/components :: leftSidebar"> </div>
+
+        <div class="col-9">
+            <h1>Usuarios</h1>
+            <input class="form-control mr-sm-2 my-2" type="search" id="inputBuscaUsuario" onkeyup="buscaUsuario()"
+                   placeholder="Buscar por nombre de usuario..."/>
+
+            <table class="table table-hover table-responsive-md" id="tablaFiltrada">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" >Usuario</th>
+                    <th scope="col" >Accion</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="usuario, status : ${usuarios}" th:if="${usuario.activo == 'S'}">
+                    <td><b class="text-wrap" th:text="${status.index}"></b></td>
+                    <td><b class="text-wrap" th:text="${usuario.nombreUsuario}"></b></td>
+                    <td class="btn-group btn-group-sm">
+                        <a class="btn btn-primary text-white" th:href="@{${#httpServletRequest.requestURI} + '/editar?user=' + ${usuario.nombreUsuario}}">Editar</a>
+                        <button class="btn btn-danger text-white" data-toggle="modal" th:data-target="'#btnInactivaUsuario' + ${status.index}">Inactivar</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" th:id="btnInactivaUsuario + ${status.index}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">¡Inactivar Usuario <span th:text="${usuario.nombreUsuario}"></span>!</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Está a punto de inactivar el usuario <b><span th:text="${usuario.nombreUsuario}"></span></b>. Si hace esto
+                                            el usuario ya no tendrá acceso.</p>
+                                        <p>¿Desea continuar?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                        <a type="button" class="btn btn-success" th:href="@{${#httpServletRequest.requestURI} + '/inactivar?user=' + ${usuario.nombreUsuario}}">Aceptar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    <script>
+    function buscaUsuario() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("inputBuscaUsuario");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("tablaFiltrada");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    </script>
+
+<div th:replace="admin/fragments/components :: script"></div>
+
+</body>
+</html>

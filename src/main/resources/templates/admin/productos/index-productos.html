@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/fragments/components :: head">
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+
+<div th:replace="admin/fragments/components :: nav"></div>
+
+<div class="container-fluid my-4">
+    <div class="row">
+        <div th:replace="admin/fragments/components :: leftSidebar"> </div>
+
+        <div class="col-8 mx-2">
+            <h1>Productos</h1>
+            <div class="float-right my-2">
+                <a class="btn btn-lg btn-success text-white" th:href="@{${#httpServletRequest.requestURI} + '/crear' }">Crear Producto +</a>
+            </div>
+            <br>
+            <table class="table table-hover table-responsive-md">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" >Código</th>
+                    <th scope="col" >Nombre</th>
+                    <th scope="col" >Accion</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="producto, status : ${productos}">
+                    <td><b class="text-wrap" th:text="${status.index+1}"></b></td>
+                    <td><b class="text-wrap" th:text="${producto.codigoProducto}"></b></td>
+                    <td><b class="text-wrap" th:text="${producto.tituloProducto}"></b></td>
+                    <td>
+                        <div class="btn-group btn-group-md">
+                            <a class="btn btn-primary text-white" th:href="@{${#httpServletRequest.requestURI} + '/editar?codigo=' + ${producto.codigoProducto}}">Editar</a>
+                            <a class="btn btn-danger text-white" th:href="@{${#httpServletRequest.requestURI} + '/eliminar?codigo=' + ${producto.codigoProducto}}">Eliminar</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div th:replace="admin/fragments/components :: script"></div>
+
+</body>
+</html>
